@@ -10,7 +10,7 @@ export function Header() {
         typography: "h6",
         textAlign: "left",
         texTransform: "uppercase",
-        color: "#9FBFB9B",
+        color: "#9FBF9B",
       }}
       style={{ padding: 10, paddingLeft: 20 }}
     >
