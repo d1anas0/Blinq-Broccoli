@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { FormModal } from "./components/FormModal";
 
 // primary colour = #9FBF9B
 // secondary colour = #121113
@@ -35,16 +36,16 @@ export default function App() {
           Be the first to know when we launch.
         </Typography>
 
-        {/* REQUEST INVITE BUTTON */}
         <Box style={{ marginTop: "4%" }}>
           <Button
             variant="contained"
             size="large"
             style={{ backgroundColor: "#db7f50", color: "#121113" }}
-            onClick={() => alert("clicked!")}
+            // onClick={() => alert("clicked!")}
           >
             request an invite
           </Button>
+          <FormModal />
         </Box>
       </Box>
       <Footer />
