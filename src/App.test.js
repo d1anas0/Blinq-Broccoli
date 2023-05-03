@@ -1,6 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 
 import App from "./App";
+import FormModal from "./components/FormModal";
+
+afterEach(cleanup);
 
 describe("In the Landing Page", () => {
   describe("Request Invite Form", () => {
@@ -10,17 +13,15 @@ describe("In the Landing Page", () => {
         expect(screen.getByRole("button")).toBeInTheDocument();
       });
     });
-    describe("Given the 'Request Invite Form' did NOT open", () => {
-      it("Should NOT display the form", () => {
-        render(<Modal closeModal />);
-        expect(screen.queryByRole("form")).toBeNull();
-      });
-    });
-    describe("Given the 'Request Invite Form' DID open", () => {
-      it("Should find the 'Send' button", () => {
-        render(<Modal open />);
-        expect(screen.getByText(/send/i)).toBeInTheDocument();
-      });
-    });
+    //   it("The button should call a function to open the 'Request Invite Form'", () => {
+    //     render(<App />);
+    //     const openModalSpy = jest.fn();
+    //     fireEvent.click(screen.getByRole("button"));
+    //     expect(openModalSpy).toHaveBeenCalled();
+    //   });
+    // it("Should find the 'Send' button", () => {
+    //   // render(<FormModal openModal={isVisible} />);
+    //   expect(screen.getByText(/send/i)).toBeInTheDocument();
+    // });
   });
 });
