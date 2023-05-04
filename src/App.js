@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,7 +12,16 @@ import { FormModal } from "./components/FormModal";
 // text colour = #E0DDCF
 // text colour = #EFEDE6
 
+// primary colour = #9FBF9B
+// secondary colour = #199059
+// text colour = #0E1B0E
+// base/background? colour = #EFEDE6
+
 export default function App() {
+  const [isVisible, setIsVisible] = useState(false);
+  const openModal = () => setIsVisible(true);
+  const closeModal = () => setIsVisible(true); // change back to false when ready!
+
   return (
     <>
       <Header />
@@ -41,11 +50,11 @@ export default function App() {
             variant="contained"
             size="large"
             style={{ backgroundColor: "#db7f50", color: "#121113" }}
-            // onClick={() => alert("clicked!")}
+            onClick={openModal}
           >
             request an invite
           </Button>
-          <FormModal />
+          <FormModal openModal={isVisible} closeModal={closeModal} />
         </Box>
       </Box>
       <Footer />
