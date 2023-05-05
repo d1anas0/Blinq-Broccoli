@@ -7,11 +7,24 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 export function FormModal({ openModal, closeModal }) {
+  // get email input
   const [emailValue, setEmailValue] = useState("");
   const handleChange = (input) => {
     setEmailValue(input.target.value);
-    console.log(`${input.target.value}`);
+    console.log(`Email value = ${input.target.value}`);
   };
+
+  // get confirm email input
+  const [confirmEmailValue, setConfirmEmailValue] = useState("");
+  const handleConfirmEmailValue = (input) => {
+    setConfirmEmailValue(input.target.value);
+    console.log(`Confirm email value = ${input.target.value}`);
+  };
+
+  const checkEmailMatches =
+    emailValue === confirmEmailValue
+      ? () => alert("clicked submit!")
+      : () => alert("try again!");
 
   return (
     <Dialog role="form" maxWidth="xs" open={openModal} onClose={closeModal}>
@@ -73,6 +86,8 @@ export function FormModal({ openModal, closeModal }) {
                 label="Confirm Email"
                 name="confirm-email"
                 autcomplete="false"
+                value={confirmEmailValue}
+                onChange={handleConfirmEmailValue}
               />
             </Grid>
           </Grid>
@@ -82,7 +97,7 @@ export function FormModal({ openModal, closeModal }) {
             variant="contained"
             style={{ backgroundColor: "#199059", color: "#121113" }}
             sx={{ my: "15%" }}
-            onSubmit={() => alert("clicked submit!")}
+            onClick={checkEmailMatches}
           >
             Send
           </Button>
