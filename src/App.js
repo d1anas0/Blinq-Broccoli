@@ -23,7 +23,7 @@ export default function App() {
   const closeModal = () => setIsVisible(true); // change back to false when ready!
 
   return (
-    <>
+    <div data-testid="landing-page">
       <Header />
       <Box
         sx={{
@@ -49,7 +49,7 @@ export default function App() {
           <Button
             variant="contained"
             size="large"
-            style={{ backgroundColor: "#db7f50", color: "#121113" }}
+            style={{ backgroundColor: "#199059", color: "#121113" }}
             onClick={openModal}
           >
             request an invite
@@ -58,6 +58,6 @@ export default function App() {
         </Box>
       </Box>
       <Footer />
-    </>
+    </div>
   );
 }
