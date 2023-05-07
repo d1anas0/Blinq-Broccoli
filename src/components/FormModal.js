@@ -9,22 +9,27 @@ import Button from "@mui/material/Button";
 export function FormModal({ openModal, closeModal }) {
   // get email input
   const [emailValue, setEmailValue] = useState("");
-  const handleChange = (input) => {
+  const handleEmailValue = (input) => {
     setEmailValue(input.target.value);
-    console.log(`Email value = ${input.target.value}`);
+    console.log(`Email entered = ${input.target.value}`);
   };
+  console.log("HERE: ", emailValue);
 
+  // _____________________________________________________________________________
+  // Confirm email matches
+  
   // get confirm email input
-  const [confirmEmailValue, setConfirmEmailValue] = useState("");
-  const handleConfirmEmailValue = (input) => {
-    setConfirmEmailValue(input.target.value);
-    console.log(`Confirm email value = ${input.target.value}`);
-  };
+  // const [confirmEmailValue, setConfirmEmailValue] = useState("");
+  // const handleConfirmEmailValue = (input) => {
+    //   setConfirmEmailValue(input.target.value);
+    //   console.log(`Confirm email value = ${input.target.value}`);
+    // };
+    // const checkEmailMatches =
+    //   emailValue === confirmEmailValue
+    //     ? () => alert("submitted!")
+    //     : () => alert("try again!");
+    // _____________________________________________________________________________
 
-  const checkEmailMatches =
-    emailValue === confirmEmailValue
-      ? () => alert("clicked submit!")
-      : () => alert("try again!");
 
   return (
     <Dialog role="form" maxWidth="xs" open={openModal} onClose={closeModal}>
@@ -60,14 +65,17 @@ export function FormModal({ openModal, closeModal }) {
                 // helperText="Min. 3 characters"
                 required
                 fullWidth
-                id="full name"
+                type="text"
+                id="full-name"
                 label="Full Name"
-                name="full name"
+                name="full-name"
                 autoComplete="name"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                // type="email"
+                pattern="[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
                 required
                 fullWidth
                 id="email"
@@ -75,13 +83,14 @@ export function FormModal({ openModal, closeModal }) {
                 name="email"
                 autoComplete="email"
                 value={emailValue}
-                onChange={handleChange}
+                onChange={handleEmailValue}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
+                type="email"
                 id="confirm-email"
                 label="Confirm Email"
                 name="confirm-email"
@@ -89,7 +98,7 @@ export function FormModal({ openModal, closeModal }) {
                 value={confirmEmailValue}
                 onChange={handleConfirmEmailValue}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             fullWidth
@@ -97,7 +106,7 @@ export function FormModal({ openModal, closeModal }) {
             variant="contained"
             style={{ backgroundColor: "#199059", color: "#121113" }}
             sx={{ my: "15%" }}
-            onClick={checkEmailMatches}
+            onClick={() => alert("clicked")}
           >
             Send
           </Button>
