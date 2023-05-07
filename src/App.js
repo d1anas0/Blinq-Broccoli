@@ -8,11 +8,6 @@ import { Footer } from "./components/Footer";
 import { FormModal } from "./components/FormModal";
 
 // primary colour = #9FBF9B
-// secondary colour = #121113
-// text colour = #E0DDCF
-// text colour = #EFEDE6
-
-// primary colour = #9FBF9B
 // secondary colour = #199059
 // text colour = #0E1B0E
 // base/background? colour = #EFEDE6
@@ -20,7 +15,7 @@ import { FormModal } from "./components/FormModal";
 export default function App() {
   const [isVisible, setIsVisible] = useState(false);
   const openModal = () => setIsVisible(true);
-  const closeModal = () => setIsVisible(true); // change back to false when ready!
+  const closeModal = () => setIsVisible(false);
 
   return (
     <div data-testid="landing-page">
