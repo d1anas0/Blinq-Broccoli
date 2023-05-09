@@ -24,9 +24,9 @@ export function FormModal({ openModal, closeModal }) {
     setConfirmEmailValue(input.target.value);
   };
 
-  const validateFormInputs = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    // const validateFormInputs = () => {
     // Check name has > 3 characters
     const nameValid = fullName.length > 2;
     !nameValid ? setFullNameError(true) : setFullNameError(false);
@@ -40,7 +40,36 @@ export function FormModal({ openModal, closeModal }) {
     // Confirm email matches
     const confirmEmail = emailValue === confirmEmailValue;
     !confirmEmail ? setEmailMatchError(true) : setEmailMatchError(false);
+    // };
+
+    console.log("1. fullname", fullName, "email", emailValue);
+
+    // const submitForm = (fullName, emailValue) => {
+    // if (validateFormInputs) {
+    fetch("https://us-central1-blinkapp-684c1.cloudfunctions.net/fakeAuth", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        name: fullName,
+        email: emailValue,
+      }),
+    })
+      .then((response) => {
+        console.log("2. fullName", fullName);
+        response.json();
+        console.log(response.json()); // rejected
+      })
+      .then((data) => {
+        console.log("data", data); //undefined
+      })
+      .catch((err) => {
+        console.log("errored", err);
+      });
   };
+
+  // };
 
   return (
     <Dialog maxWidth="xs" open={openModal} onClose={closeModal}>
@@ -66,7 +95,7 @@ export function FormModal({ openModal, closeModal }) {
         }}
       >
         {/*form components  */}
-        <Box component="form">
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
@@ -115,13 +144,12 @@ export function FormModal({ openModal, closeModal }) {
             fullWidth
             type="submit"
             variant="contained"
-            style={{ backgroundColor: "#199059", color: "#121113" }}
+            style={{ backgroundColor: "#199059", color: "#EFEDE6" }}
             sx={{ my: "15%" }}
-            onClick={validateFormInputs}
           >
             Send
           </Button>
-        </Box>
+        </form>
       </Box>
     </Dialog>
   );
