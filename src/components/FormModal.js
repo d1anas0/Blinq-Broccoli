@@ -42,31 +42,32 @@ export function FormModal({ openModal, closeModal }) {
     !confirmEmail ? setEmailMatchError(true) : setEmailMatchError(false);
     // };
 
-    console.log("1. fullname", fullName, "email", emailValue);
-
     // const submitForm = (fullName, emailValue) => {
-    // if (validateFormInputs) {
-    fetch("https://us-central1-blinkapp-684c1.cloudfunctions.net/fakeAuth", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        name: fullName,
-        email: emailValue,
-      }),
-    })
-      .then((response) => {
-        console.log("2. fullName", fullName);
-        response.json();
-        console.log(response.json()); // rejected
+    if (nameValid && emailFormatValid && confirmEmail) {
+      fetch("https://us-central1-blinkapp-684c1.cloudfunctions.net/fakeAuth", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email: emailValue,
+        }),
       })
-      .then((data) => {
-        console.log("data", data); //undefined
-      })
-      .catch((err) => {
-        console.log("errored", err);
-      });
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(alert("oops, please try again"));
+          }
+          const responseJson = response.json();
+          console.log("2. response", responseJson);
+        })
+        .then(() => {
+          alert("Great! We'll be in touch soon ^^");
+        })
+        .catch((err) => {
+          console.log("3. errored", err);
+        });
+    }
   };
 
   // };
@@ -117,7 +118,7 @@ export function FormModal({ openModal, closeModal }) {
                 error={emailFormatError}
                 required
                 fullWidth
-                type="email"
+                // type="email"
                 id="email"
                 label="Email"
                 name="email"
@@ -131,7 +132,7 @@ export function FormModal({ openModal, closeModal }) {
                 error={emailMatchError}
                 required
                 fullWidth
-                type="email"
+                // type="email"
                 id="confirm-email"
                 label="Confirm Email"
                 name="confirm-email"

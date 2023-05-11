@@ -10,7 +10,7 @@ import { FormModal } from "./components/FormModal";
 // primary colour = #9FBF9B
 // secondary colour = #199059
 // text colour = #0E1B0E
-// base/background? colour = #EFEDE6
+// base/background/contrasting colour = #EFEDE6
 
 export default function App() {
   const [isVisible, setIsVisible] = useState(false);
