@@ -13,6 +13,8 @@ export function FormModal({ openModal, closeModal }) {
   const [emailFormatError, setEmailFormatError] = useState(false);
   const [confirmEmailValue, setConfirmEmailValue] = useState("");
   const [emailMatchError, setEmailMatchError] = useState(false);
+  const [buttonText, setButtonText] = useState("send");
+  const [buttonStyle, setButtonStyle] = useState(false);
 
   const handleFullName = (input) => {
     setFullName(input.target.value);
@@ -26,24 +28,21 @@ export function FormModal({ openModal, closeModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const validateFormInputs = () => {
-    // Check name has > 3 characters
     const nameValid = fullName.length > 2;
     !nameValid ? setFullNameError(true) : setFullNameError(false);
 
-    // Email Validation - applying `inputProps={{ pattern: xxx }}` attribute to <TextField> does not work.
-    // Would consider using eg. React-Hook-Form for more involved/complex forms
     const emailFormatValid =
       /[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(emailValue);
     !emailFormatValid ? setEmailFormatError(true) : setEmailFormatError(false);
 
-    // Confirm email matches
     const confirmEmail = emailValue === confirmEmailValue;
     !confirmEmail ? setEmailMatchError(true) : setEmailMatchError(false);
-    // };
 
-    // const submitForm = (fullName, emailValue) => {
+    //useEffect?
     if (nameValid && emailFormatValid && confirmEmail) {
+      setButtonText("sending");
+      setButtonStyle(true);
+
       fetch("https://us-central1-blinkapp-684c1.cloudfunctions.net/fakeAuth", {
         method: "POST",
         headers: {
@@ -56,21 +55,27 @@ export function FormModal({ openModal, closeModal }) {
       })
         .then((response) => {
           if (response.status !== 200) {
-            throw new Error(alert("oops, please try again"));
+            throw new Error(
+              alert(
+                `Oops, that's a ${response.status} (bad request). Please try again 😔`
+              )
+            );
           }
           const responseJson = response.json();
-          console.log("2. response", responseJson);
+          console.log("1. response", responseJson);
         })
         .then(() => {
-          alert("Great! We'll be in touch soon ^^");
+          alert("Amazing! We'll be in touch soon 😉");
+          setButtonText("send");
+          setButtonStyle(false);
         })
-        .catch((err) => {
-          console.log("3. errored", err);
+        .catch((error) => {
+          console.log("2. errored", error);
+          setButtonText("send");
+          setButtonStyle(false);
         });
     }
   };
-
-  // };
 
   return (
     <Dialog maxWidth="xs" open={openModal} onClose={closeModal}>
@@ -95,7 +100,6 @@ export function FormModal({ openModal, closeModal }) {
           px: "6%",
         }}
       >
-        {/*form components  */}
         <form onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
@@ -118,7 +122,6 @@ export function FormModal({ openModal, closeModal }) {
                 error={emailFormatError}
                 required
                 fullWidth
-                // type="email"
                 id="email"
                 label="Email"
                 name="email"
@@ -132,7 +135,6 @@ export function FormModal({ openModal, closeModal }) {
                 error={emailMatchError}
                 required
                 fullWidth
-                // type="email"
                 id="confirm-email"
                 label="Confirm Email"
                 name="confirm-email"
@@ -145,10 +147,15 @@ export function FormModal({ openModal, closeModal }) {
             fullWidth
             type="submit"
             variant="contained"
-            style={{ backgroundColor: "#199059", color: "#EFEDE6" }}
+            style={
+              buttonStyle
+                ? { backgroundColor: "#ee881b", color: "#EFEDE6" }
+                : { backgroundColor: "#199059", color: "#EFEDE6" }
+            }
             sx={{ my: "15%" }}
+            onClick={handleSubmit}
           >
-            Send
+            {buttonText}
           </Button>
         </form>
       </Box>
