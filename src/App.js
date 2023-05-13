@@ -14,7 +14,7 @@ import { FormModal } from "./components/FormModal";
 
 export default function App() {
   const [isVisible, setIsVisible] = useState(false);
-  const openModal = () => setIsVisible(true);
+  const openFormModal = () => setIsVisible(true);
   const closeModal = () => setIsVisible(false);
 
   return (
@@ -44,12 +44,12 @@ export default function App() {
           <Button
             variant="contained"
             size="large"
-            style={{ backgroundColor: "#199059", color: "#121113" }}
-            onClick={openModal}
+            style={{ backgroundColor: "#199059", color: "#efede6" }}
+            onClick={openFormModal}
           >
             request an invite
           </Button>
-          <FormModal openModal={isVisible} closeModal={closeModal} />
+          <FormModal openFormModal={isVisible} closeModal={closeModal} />
         </Box>
       </Box>
       <Footer />

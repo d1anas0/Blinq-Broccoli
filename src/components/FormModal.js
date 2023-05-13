@@ -6,7 +6,9 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-export function FormModal({ openModal, closeModal }) {
+import { SuccessModal } from "./SuccessModal";
+
+export function FormModal({ openFormModal, closeModal }) {
   const [fullName, setFullName] = useState("");
   const [fullNameError, setFullNameError] = useState(false);
   const [emailValue, setEmailValue] = useState("");
@@ -15,6 +17,11 @@ export function FormModal({ openModal, closeModal }) {
   const [emailMatchError, setEmailMatchError] = useState(false);
   const [buttonText, setButtonText] = useState("send");
   const [buttonStyle, setButtonStyle] = useState(false);
+
+  // success modal
+  const [successModal, setSuccessModal] = useState(false);
+  const openSuccessModal = () => setSuccessModal(true);
+  const closeSuccessModal = () => setSuccessModal(false);
 
   const handleFullName = (input) => {
     setFullName(input.target.value);
@@ -61,16 +68,14 @@ export function FormModal({ openModal, closeModal }) {
               )
             );
           }
-          const responseJson = response.json();
-          console.log("1. response", responseJson);
+          response.json();
         })
         .then(() => {
-          alert("Amazing! We'll be in touch soon 😉");
+          openSuccessModal();
           setButtonText("send");
           setButtonStyle(false);
         })
-        .catch((error) => {
-          console.log("2. errored", error);
+        .catch(() => {
           setButtonText("send");
           setButtonStyle(false);
         });
@@ -78,87 +83,92 @@ export function FormModal({ openModal, closeModal }) {
   };
 
   return (
-    <Dialog maxWidth="xs" open={openModal} onClose={closeModal}>
-      <DialogTitle
-        data-testid="dialog-title"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          backgroundColor: "#EFEDE6",
-          padding: "10%",
-        }}
-      >
-        Request an Invite
-      </DialogTitle>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          backgroundColor: "#EFEDE6",
-          px: "6%",
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextField
-                helperText="Minimum 3 characters"
-                error={fullNameError}
-                required
-                fullWidth
-                type="text"
-                id="full-name"
-                label="Full Name"
-                name="full-name"
-                value={fullName}
-                onChange={handleFullName}
-              />
+    <>
+      <Dialog maxWidth="xs" open={openFormModal} onClose={closeModal}>
+        <DialogTitle
+          data-testid="dialog-title"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            backgroundColor: "#EFEDE6",
+            padding: "10%",
+          }}
+        >
+          Request an Invite
+        </DialogTitle>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            backgroundColor: "#EFEDE6",
+            px: "6%",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextField
+                  helperText="Minimum 3 characters"
+                  error={fullNameError}
+                  required
+                  fullWidth
+                  type="text"
+                  id="full-name"
+                  label="Full Name"
+                  name="full-name"
+                  value={fullName}
+                  onChange={handleFullName}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  helperText="Required format = abc123@mailbox.com"
+                  error={emailFormatError}
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  value={emailValue}
+                  onChange={handleEmailValue}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  helperText="Emails must match, case-sensitive"
+                  error={emailMatchError}
+                  required
+                  fullWidth
+                  id="confirm-email"
+                  label="Confirm Email"
+                  name="confirm-email"
+                  value={confirmEmailValue}
+                  onChange={handleConfirmEmailValue}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                helperText="Required format = abc123@mailbox.com"
-                error={emailFormatError}
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                value={emailValue}
-                onChange={handleEmailValue}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                helperText="Emails must match, case-sensitive"
-                error={emailMatchError}
-                required
-                fullWidth
-                id="confirm-email"
-                label="Confirm Email"
-                name="confirm-email"
-                value={confirmEmailValue}
-                onChange={handleConfirmEmailValue}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            fullWidth
-            type="submit"
-            variant="contained"
-            style={
-              buttonStyle
-                ? { backgroundColor: "#ee881b", color: "#EFEDE6" }
-                : { backgroundColor: "#199059", color: "#EFEDE6" }
-            }
-            sx={{ my: "15%" }}
-            onClick={handleSubmit}
-          >
-            {buttonText}
-          </Button>
-        </form>
-      </Box>
-    </Dialog>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              style={
+                buttonStyle
+                  ? { backgroundColor: "#ee881b", color: "#EFEDE6" }
+                  : { backgroundColor: "#199059", color: "#EFEDE6" }
+              }
+              sx={{ my: "15%" }}
+            >
+              {buttonText}
+            </Button>
+          </form>
+        </Box>
+      </Dialog>
+      <SuccessModal
+        openSuccessModal={successModal}
+        closeSuccessModal={closeSuccessModal}
+      />
+    </>
   );
 }
