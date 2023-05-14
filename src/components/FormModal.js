@@ -9,38 +9,45 @@ import Button from "@mui/material/Button";
 import { SuccessModal } from "./SuccessModal";
 
 export function FormModal({ openFormModal, closeModal }) {
-  const [fullName, setFullName] = useState("");
+  const [inputValue, setInputValue] = useState({
+    fullName: "",
+    emailValue: "",
+    confirmEmailValue: "",
+  });
+
+  const handleFullName = (input) => {
+    setInputValue({ ...inputValue, fullName: input.target.value });
+  };
+  const handleEmailValue = (input) => {
+    setInputValue({ ...inputValue, emailValue: input.target.value });
+  };
+  const handleConfirmEmailValue = (input) => {
+    setInputValue({ ...inputValue, confirmEmailValue: input.target.value });
+  };
+
   const [fullNameError, setFullNameError] = useState(false);
-  const [emailValue, setEmailValue] = useState("");
   const [emailFormatError, setEmailFormatError] = useState(false);
-  const [confirmEmailValue, setConfirmEmailValue] = useState("");
   const [emailMatchError, setEmailMatchError] = useState(false);
+
   const [buttonText, setButtonText] = useState("send");
   const [buttonStyle, setButtonStyle] = useState(false);
+
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const openSuccessModal = () => setSubmitSuccess(true);
   const closeSuccessModal = () => setSubmitSuccess(false);
 
-  const handleFullName = (input) => {
-    setFullName(input.target.value);
-  };
-  const handleEmailValue = (input) => {
-    setEmailValue(input.target.value);
-  };
-  const handleConfirmEmailValue = (input) => {
-    setConfirmEmailValue(input.target.value);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nameValid = fullName.length > 2;
+    const nameValid = inputValue.fullName.length > 2;
     !nameValid ? setFullNameError(true) : setFullNameError(false);
 
     const emailFormatValid =
-      /[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(emailValue);
+      /[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(
+        inputValue.emailValue
+      );
     !emailFormatValid ? setEmailFormatError(true) : setEmailFormatError(false);
 
-    const confirmEmail = emailValue === confirmEmailValue;
+    const confirmEmail = inputValue.emailValue === inputValue.confirmEmailValue;
     !confirmEmail ? setEmailMatchError(true) : setEmailMatchError(false);
 
     if (nameValid && emailFormatValid && confirmEmail) {
@@ -53,8 +60,8 @@ export function FormModal({ openFormModal, closeModal }) {
           "Content-type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify({
-          name: fullName,
-          email: emailValue,
+          name: inputValue.fullName,
+          email: inputValue.emailValue,
         }),
       })
         .then((response) => {
@@ -69,7 +76,14 @@ export function FormModal({ openFormModal, closeModal }) {
         })
         .then(() => {
           openSuccessModal();
+          setButtonText("send");
+          setButtonStyle(false);
           closeModal();
+          setInputValue({
+            fullName: "",
+            emailValue: "",
+            confirmEmailValue: "",
+          });
         })
         .catch(() => {
           setButtonText("send");
@@ -120,7 +134,7 @@ export function FormModal({ openFormModal, closeModal }) {
                     id="full-name"
                     label="Full Name"
                     name="full-name"
-                    value={fullName}
+                    value={inputValue.fullName}
                     onChange={handleFullName}
                   />
                 </Grid>
@@ -133,7 +147,7 @@ export function FormModal({ openFormModal, closeModal }) {
                     id="email"
                     label="Email"
                     name="email"
-                    value={emailValue}
+                    value={inputValue.emailValue}
                     onChange={handleEmailValue}
                   />
                 </Grid>
@@ -146,7 +160,7 @@ export function FormModal({ openFormModal, closeModal }) {
                     id="confirm-email"
                     label="Confirm Email"
                     name="confirm-email"
-                    value={confirmEmailValue}
+                    value={inputValue.confirmEmailValue}
                     onChange={handleConfirmEmailValue}
                   />
                 </Grid>
