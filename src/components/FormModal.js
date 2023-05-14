@@ -17,8 +17,6 @@ export function FormModal({ openFormModal, closeModal }) {
   const [emailMatchError, setEmailMatchError] = useState(false);
   const [buttonText, setButtonText] = useState("send");
   const [buttonStyle, setButtonStyle] = useState(false);
-
-  // success modal
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const openSuccessModal = () => setSubmitSuccess(true);
   const closeSuccessModal = () => setSubmitSuccess(false);
@@ -45,7 +43,6 @@ export function FormModal({ openFormModal, closeModal }) {
     const confirmEmail = emailValue === confirmEmailValue;
     !confirmEmail ? setEmailMatchError(true) : setEmailMatchError(false);
 
-    //useEffect?
     if (nameValid && emailFormatValid && confirmEmail) {
       setButtonText("sending");
       setButtonStyle(true);
@@ -72,8 +69,7 @@ export function FormModal({ openFormModal, closeModal }) {
         })
         .then(() => {
           openSuccessModal();
-          setButtonText("send");
-          setButtonStyle(false);
+          closeModal();
         })
         .catch(() => {
           setButtonText("send");

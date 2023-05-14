@@ -4,10 +4,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export function SuccessModal({ openSuccessModal, closeSuccessModal }) {
-  const reload = () => window.location.reload();
-
   return (
-    <Dialog maxWidth="xs" open={openSuccessModal} onClose={reload}>
+    <Dialog maxWidth="xs" open={openSuccessModal} onClose={closeSuccessModal}>
       <DialogTitle
         data-testid="dialog-title"
         sx={{
