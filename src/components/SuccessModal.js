@@ -2,14 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-// import Grid from "@mui/material/Grid";
-// import TextField from "@mui/material/TextField";
-// import Button from "@mui/material/Button";
 
 export function SuccessModal({ openSuccessModal, closeSuccessModal }) {
-  
-    // closeSuccessModal should also close FormModal...
-
   return (
     <Dialog maxWidth="xs" open={openSuccessModal} onClose={closeSuccessModal}>
       <DialogTitle
