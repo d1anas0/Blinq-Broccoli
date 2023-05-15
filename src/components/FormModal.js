@@ -5,8 +5,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 
 import { SuccessModal } from "./SuccessModal";
+import { Typography } from "@mui/material";
 
 export function FormModal({ openFormModal, closeModal }) {
   const [inputValue, setInputValue] = useState({
@@ -35,6 +37,11 @@ export function FormModal({ openFormModal, closeModal }) {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const openSuccessModal = () => setSubmitSuccess(true);
   const closeSuccessModal = () => setSubmitSuccess(false);
+
+  const [requestFail, setRequestFail] = useState(false);
+  const openAlert = () => setRequestFail(true);
+  const closeAlert = () => setRequestFail(false);
+  const [requestStatus, setRequestStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,14 +72,13 @@ export function FormModal({ openFormModal, closeModal }) {
         }),
       })
         .then((response) => {
+          console.log(response.status);
           if (response.status !== 200) {
             throw new Error(
-              alert(
-                `Oops, that's a ${response.status} (bad request). Please try again 😔`
-              )
+              openAlert(),
+              setRequestStatus(`${response.status}`)
             );
           }
-          response.json();
         })
         .then(() => {
           openSuccessModal();
@@ -84,6 +90,8 @@ export function FormModal({ openFormModal, closeModal }) {
             emailValue: "",
             confirmEmailValue: "",
           });
+          closeAlert();
+          setRequestStatus("");
         })
         .catch(() => {
           setButtonText("send");
@@ -126,6 +134,7 @@ export function FormModal({ openFormModal, closeModal }) {
               <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <TextField
+                    color="success"
                     helperText="Minimum 3 characters"
                     error={fullNameError}
                     required
@@ -140,6 +149,7 @@ export function FormModal({ openFormModal, closeModal }) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    color="success"
                     helperText="Required format = abc123@mailbox.com"
                     error={emailFormatError}
                     required
@@ -153,6 +163,7 @@ export function FormModal({ openFormModal, closeModal }) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    color="success"
                     helperText="Emails must match, case-sensitive"
                     error={emailMatchError}
                     required
@@ -165,6 +176,17 @@ export function FormModal({ openFormModal, closeModal }) {
                   />
                 </Grid>
               </Grid>
+              {requestFail ? (
+                <Alert
+                  severity="error"
+                  variant="outlined"
+                  sx={{ mt: "8%", backgroundColor: "#FACFCF" }}
+                >
+                  Oh no, that's a {requestStatus} (bad request).
+                  <br />
+                  Please check your entries and re-send.
+                </Alert>
+              ) : null}
               <Button
                 fullWidth
                 type="submit"
@@ -174,7 +196,7 @@ export function FormModal({ openFormModal, closeModal }) {
                     ? { backgroundColor: "#ee881b", color: "#EFEDE6" }
                     : { backgroundColor: "#199059", color: "#EFEDE6" }
                 }
-                sx={{ my: "15%" }}
+                sx={{ mt: "8%", mb: "14%" }}
               >
                 {buttonText}
               </Button>
