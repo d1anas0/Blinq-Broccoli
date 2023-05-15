@@ -1,32 +1,32 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
 
 export function SuccessModal({ openSuccessModal, closeSuccessModal }) {
   return (
-    <Dialog maxWidth="xs" open={openSuccessModal} onClose={closeSuccessModal}>
-      <DialogTitle
-        data-testid="dialog-title"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          backgroundColor: "#EFEDE6",
-          padding: "10%",
-        }}
-      >
-        Amazing! We'll be in touch soon 😉
-      </DialogTitle>
-      <Box
+    <Dialog
+      maxWidth="xs"
+      fullWidth
+      open={openSuccessModal}
+      onClose={closeSuccessModal}
+    >
+      <Card
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           backgroundColor: "#EFEDE6",
-          px: "6%",
+          padding: "10%",
         }}
-      ></Box>
+      >
+        <Typography variant="h6" color="#0E1B0E" marginBottom="6%">
+          Amazing!
+        </Typography>
+        <Typography variant="body1" color="#0E1B0E">
+          We'll be in touch soon 😉
+        </Typography>
+      </Card>
     </Dialog>
   );
 }
