@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Welcome to Broccoli & Co.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple webpage and signup form for an early invite to access Broccoli & Co.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app); given that this is a simple single-page web application, I opted to use Material UI over Bootstrap as it provided for everything I envisioned I'd need for this webpage and felt it was a more straightforward solution at this point in time.
+
+That said, one of the challenges I'm currently still trying to resolve, is having the <TextField> colour (set at 'success') to only show as that colour theme, when the user's entries has been correctly entered (ie. meets validation requirements).
+
+Things I'd look to implement:
+
+- should add accessibility labels
+- properly establish a design system and implement it as a theme, instead of hardcoding HEX codes throughout the code. Particularly important if I were to continue building on this.
+- in the same vein as the dot point above, I would try to add TypeScript to this project, or at minimum PropTypes - though I've had a little experience with TypeScript, and none with PropTypes. So I would opt for TypeScript.
+- the file FormModal.js is getting quite big, would look to refactor the code and make it more dry and easier to follow.
+- if the form becomes more complex than it is, I would look to add react-hook-form to handle the form validation for me.
+- use broccoli themed emojis! 🥦 and enhance the webpages' styling overall, with images etc (surprisingly hard to find a suitable image of broccoli that doesn't look like a green tree 😅).
+- would need to revisit tests, was a struggle trying to write and run tests as the machine I'm developing on just couldn't keep up (in fact it would take several seconds to show even simple UI changes and often I would have to only launch the app after I've added the new code, and then stop it again before continuing)
 
 ## Available Scripts
 
@@ -29,42 +43,6 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
