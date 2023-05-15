@@ -8,9 +8,9 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
 import { SuccessModal } from "./SuccessModal";
-import { Typography } from "@mui/material";
 
 export function FormModal({ openFormModal, closeModal }) {
+  // some more refactors needed here...
   const [inputValue, setInputValue] = useState({
     fullName: "",
     emailValue: "",
